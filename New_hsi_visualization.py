@@ -54,7 +54,7 @@ from matplotlib.widgets import Cursor
 
 # The following 2 functions are a set of interactive functions to plot and performe phasor analysis
 def interactive1(dc, g, s, Ro, nbit, histeq=True, ncomp=5, filt=False, nfilt=0, spectrums=False,
-                 hsi_stack=None, lamd=None,factor=1, CW=1): #change the FACTOR to adjust the size of the circles in the plot, and change the Circle Width CW to adjust the linewidth value as needed
+                 hsi_stack=None, lamd=None,factor=1, CW=1, S=1): #change the FACTOR to adjust the size of the circles in the plot, and change the Circle Width CW to adjust the linewidth value as needed
     """
         This function plot the avg image, its histogram, the phasors and the rbg pseudocolor image.
     To get the phasor the user must pick an intensity cut umbral in the histogram in order to plot the phasor.
@@ -133,7 +133,10 @@ def interactive1(dc, g, s, Ro, nbit, histeq=True, ncomp=5, filt=False, nfilt=0, 
                 plt.plot(lamd[:min_len], spect[i][:min_len], ccolor[i]) #New line
             else:
                 plt.plot(spect[i], ccolor[i])
-        plt.grid()
+       #plt.grid() Comment this line or delete it
+        plt.grid(which='both', axis='x')  # Enable both major and minor grids for the x-axis
+        plt.minorticks_on()  # Enable minor ticks
+        plt.xticks(np.arange(min(lamd), max(lamd) + S, S * 5))  #NEW LINE # Set x-axis ticks every 10 nm or 5 nm
         plt.xlabel('Wavelength [nm]')
         plt.ylabel('Normalize intensity')
         plt.title('Average Components Spectrums')
